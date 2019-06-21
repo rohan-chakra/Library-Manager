@@ -1,0 +1,132 @@
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+import java.util.*;
+import java.io.*;
+import java.io.FileWriter;  
+
+public class bookstore implements ActionListener 
+  { 
+      JTextField txt, txt2, txt3, txt4, txt5; 
+      JLabel l,l1,l2,l3,l4, l5;      
+	JButton b1; 
+      int uniqueID =45981237;
+      static int count =0 ;
+      static int unique[] = new int[200];
+      static String master[]= new String[200];		
+       
+       
+        public bookstore()
+            { 
+                JFrame f = new JFrame();
+                Color custom = new Color(204, 229, 255);
+                Color custom2 = new Color(255, 178, 102);
+                f.getContentPane().setBackground(custom);
+                txt = new JTextField(); 
+                txt.setBounds(400 , 250 , 200 , 20);
+
+                txt2 = new JTextField(); 
+                txt2.setBounds(400 , 350 , 200 , 20);
+
+                txt3 = new JTextField(); 
+                txt3.setBounds(400 , 450 , 200 , 20);
+
+
+                txt4 = new JTextField(); 
+                txt4.setBounds(400 , 550 , 200 , 20);
+
+                txt5 = new JTextField(); 
+                txt5.setBounds(400 , 650 , 200 , 20);
+
+		l = new JLabel("WELCOME TO ROHAN'S LIBRARY");
+		l.setBounds(400,50,400,20);
+
+		l1 = new JLabel("Name of BOOK");
+		l1.setBounds(200,250,200,20);
+
+		l2 = new JLabel("Name of AUTHOR");
+		l2.setBounds(200,350,200,20);
+
+		l3 = new JLabel("Category");
+		l3.setBounds(200,450,200,20);
+
+		l4 = new JLabel("Cost");
+		l4.setBounds(200,550,200,20);
+		
+		l5 = new JLabel("UNIQUEID(Access No.):");
+		l5.setBounds(200,650,200,20);
+
+                b1=new JButton("Submit BOOK Details"); 
+                b1.setBackground(custom2);
+                b1.setBounds(400,100,200,20);
+
+                f.add(b1); 
+                f.add(txt);
+                f.add(txt2);
+                f.add(txt3);
+                f.add(txt4);
+		f.add(l);
+                f.add(l1);
+                f.add(l2);
+                f.add(l3);
+                f.add(l4);
+		f.add(txt5);
+		f.add(l5);
+                
+                b1.addActionListener(this); 
+                f.setSize(500 , 500);
+                f.setLayout(null);
+                f.setVisible(true);
+                f.addWindowListener(new WindowAdapter()
+                {
+                        public void windowClosing(WindowEvent we)
+                        {
+                                System.exit(0);
+                        }
+                });
+                
+             }     
+        public void actionPerformed(ActionEvent e) 
+        { 
+			String Name = txt.getText();
+			String Author = txt2.getText();
+			String Category = txt3.getText();
+			int cost = Integer.parseInt(txt4.getText());
+			unique[count]=uniqueID+(uniqueID%200);
+			uniqueID=uniqueID-Name.charAt(0)+Name.charAt(1)+Name.charAt(2)+Name.charAt(3);
+			master[count]=unique[count]+" "+Name+" "+Author+" "+Category+" "+cost;
+			txt5.setText(Integer.toString(unique[count]));
+			count++;
+			int temp;
+		for (int i = 0; i < count; i++) 
+	        {
+	            for (int j = i + 1; j < count; j++) 
+            {
+                if (unique[i]>unique[j]) 
+                {
+                    temp = unique[i];
+                    unique[i] = unique[j];
+                    unique[j] = temp;
+                }
+            }
+        }
+        System.out.print("BookNames in Sorted Order:\n");
+        for (int i = 0; i < count; i++) 
+	        {
+		String u = Integer.toString(unique[i]);
+            for( int j =0; j < count;j++)
+			{
+			String[] splitStr = master[j].split("\\s+");
+			if (splitStr[0].equals(u))
+				System.out.println(master[j]);
+			
+			}	
+	        }
+	}		
+
+	public static void main(String [] args)
+	{
+		bookstore b = new bookstore();
+		
+     }    
+}  
